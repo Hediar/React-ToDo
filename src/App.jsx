@@ -2,6 +2,8 @@
 import './App.css';
 import { useState } from 'react';
 
+// import AddButton from './components/Buttons';
+
 function App() {
 
   const [title, setTitle] = useState('');
@@ -38,10 +40,11 @@ function App() {
     setTitle('');
     setContent('');
   };
+
   const clickDeleteButtonHandler = (id) => {
     const newWorkings = working.filter((work) => work.id !== id);
     setworking(newWorkings);
-  }
+  };
 
   const clickCompleteButtonHandler = (id) => {
     const updateWokrings = working.map((work) => {
@@ -51,7 +54,7 @@ function App() {
       return work;
     });
     setworking(updateWokrings);
-  }
+  };
 
   const clickCancelButtonHandler = (id) => {
     const updateWokrings = working.map((work) => {
@@ -62,7 +65,7 @@ function App() {
     });
 
     setworking(updateWokrings);
-  }
+  };
 
   return (
     <div className='mytodo'>
@@ -72,22 +75,9 @@ function App() {
       </div>
       <div className='input-form'>
         <form className='addform' onSubmit={clickAddButtonHandler}>
-          <label>제목</label>
-          <input 
-          type='text'
-          value={title}
-          onChange={(event) => titleAddHandler(event)}
-          className='add-input'
-          ></input>
-          <label>내용</label>
-          <input 
-          type='text'
-          value={content}
-          onChange={(event) => contentAddHandler(event)}
-          className='add-input'
-          ></input>
-          <button className='add-btn'
-          >추가하기</button>
+          <Input labelName={'제목'} value={title} Add={titleAddHandler}></Input>
+          <Input labelName={'내용'} value={content} Add={contentAddHandler}></Input>
+          <button className='add-btn'>추가하기</button>
         </form>
       </div>
         <div className='list'>
@@ -103,8 +93,8 @@ function App() {
                       <h2 className='work-title'>{item.work}</h2>
                       {item.content}
                       <div className='buttons'>
-                        <button className='delete' onClick={() => clickDeleteButtonHandler(item.id)}>삭제하기</button>
-                        <button className='complete' onClick={() => clickCompleteButtonHandler(item.id)}>완료</button>
+                        <Button role={'delete'} name={'삭제하기'} fnc={clickDeleteButtonHandler} para={item}></Button>
+                        <Button role={'complete'} name={'완료'} fnc={clickCompleteButtonHandler} para={item}></Button>
                       </div>
                     </div>
                   )
@@ -138,26 +128,22 @@ function App() {
   );
 }
 
-export default App;
+const Input = ({labelName, value, Add}) => {
+  return (
+    <>
+    <label>{labelName}</label>
+          <input 
+          type='text'
+          value={value}
+          onChange={(event) => Add(event)}
+          className='add-input'
+          ></input>
+    </>
+  )
+};
 
-/*
- * 입력칸 필요 -> 제목, 내용
- * 추가하기 버튼
- * 
- * Working 해야하는 것 
- * 카드1 
- * 삭제하기 버튼, 완료 버튼
- * 
- * 완료 버튼 누를 경우 -> Done으로 이동
- * 
- * Done
- * 삭제하기 버튼, 취소 버튼 
- * 취소 버튼 -> Working으로 이동 
- * 
- * 컴포넌트
- * 입력
- * 리스트 
- * 
- * isDone 상태가 true이면, 상태 버튼의 라벨을 취소, isDone이 false 이면 라벨을 완료
- * 
- */
+const Button = ({role, name, fnc, para}) =>{
+  return <button className={role} onClick={() => fnc(para.id)}>{name}</button>
+};
+
+export default App;
