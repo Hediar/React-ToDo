@@ -2,7 +2,8 @@
 import './App.css';
 import { useState } from 'react';
 
-// import AddButton from './components/Buttons';
+import Cards from './components/Cards';
+import Input from './components/Input';
 
 function App() {
 
@@ -88,16 +89,12 @@ function App() {
                 working.filter((work) => {
                   return work.isDone === false
                 }).map((item) => {
-                  return (
-                    <div key={item.id} className='todo-box'>
-                      <h2 className='work-title'>{item.work}</h2>
-                      {item.content}
-                      <div className='buttons'>
-                        <Button role={'delete'} name={'삭제하기'} fnc={clickDeleteButtonHandler} para={item}></Button>
-                        <Button role={'complete'} name={'완료'} fnc={clickCompleteButtonHandler} para={item}></Button>
-                      </div>
-                    </div>
-                  )
+                  return <Cards 
+                  item={item}
+                  fnc1={clickDeleteButtonHandler}
+                  fnc2={clickCompleteButtonHandler}
+                  c={'완료'}
+                  ></Cards>
                 })
               }
             </div>
@@ -109,16 +106,12 @@ function App() {
                 working.filter((work) => {
                   return work.isDone === true
                 }).map((item) => {
-                  return (
-                    <div key={item.id} className='todo-box'>
-                      <h2 className='work-title'>{item.work}</h2>
-                      {item.content}
-                      <div className='buttons'>
-                        <button className='delete' onClick={() => clickDeleteButtonHandler(item.id)}>삭제하기</button>
-                        <button className='complete' onClick={() => clickCancelButtonHandler(item.id)}>취소</button>
-                      </div>
-                    </div>
-                  )
+                  return <Cards 
+                  item={item}
+                  fnc1={clickDeleteButtonHandler}
+                  fnc2={clickCancelButtonHandler}
+                  c={'취소'}
+                  ></Cards>
                 })
               }
             </div>
@@ -128,22 +121,5 @@ function App() {
   );
 }
 
-const Input = ({labelName, value, Add}) => {
-  return (
-    <>
-    <label>{labelName}</label>
-          <input 
-          type='text'
-          value={value}
-          onChange={(event) => Add(event)}
-          className='add-input'
-          ></input>
-    </>
-  )
-};
-
-const Button = ({role, name, fnc, para}) =>{
-  return <button className={role} onClick={() => fnc(para.id)}>{name}</button>
-};
 
 export default App;

@@ -59,7 +59,7 @@ label {
   border-radius: 10px;
 }
 
-.working {
+.working, .done {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
