@@ -10,7 +10,6 @@ function App() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-
   const [working, setworking] = useState([]);
 
   useEffect(() => {
@@ -28,7 +27,6 @@ function App() {
   const contentAddHandler = (event) => {
     setContent(event.target.value);
   };
-
 
 
   const clickAddButtonHandler = (event) =>{
@@ -60,7 +58,6 @@ function App() {
       return work;
     });
     setworking(updateWokrings);
-
     localStorage.setItem('todokey', JSON.stringify([...updateWokrings]));
   };
 
@@ -76,6 +73,35 @@ function App() {
     localStorage.setItem('todokey', JSON.stringify([...updateWokrings]));
   };
 
+  const updateButtonHandler = (id, event) => {
+    const HIDDEN_CLASSNAME = 'hidden';
+    // 클릭한 것의 todo-box 가져오기
+    const updateBox = event.target.closest('.todo-box'); 
+    const currentContent = updateBox.querySelector('.todo-text'); // 기존 보이는 제목과 내용
+    const newContent = updateBox.querySelector('.update-box'); // 수정하는 칸 
+    const currentButtons = updateBox.querySelector('.buttons'); // 버튼 담긴 태그
+
+    currentContent.classList.add(HIDDEN_CLASSNAME);
+    currentButtons.querySelector('.update').classList.add(HIDDEN_CLASSNAME);
+    newContent.classList.remove(HIDDEN_CLASSNAME);
+    currentButtons.querySelector('.update-complete').classList.remove(HIDDEN_CLASSNAME);
+
+  };
+
+  const completeUpdateButton = (id, event) => {
+    const HIDDEN_CLASSNAME = 'hidden';
+    
+    const updateBox = event.target.closest('.todo-box'); 
+    const currentContent = updateBox.querySelector('.todo-text'); // 기존 보이는 제목과 내용
+    const newContent = updateBox.querySelector('.update-box'); // 수정하는 칸 
+    const currentButtons = updateBox.querySelector('.buttons'); // 버튼 담긴 태그
+
+    currentContent.classList.remove(HIDDEN_CLASSNAME);
+    currentButtons.querySelector('.update').classList.remove(HIDDEN_CLASSNAME);
+    newContent.classList.add(HIDDEN_CLASSNAME);
+    currentButtons.querySelector('.update-complete').classList.add(HIDDEN_CLASSNAME);
+    
+  };
 
   return (
     <div className='mytodo'>
@@ -99,10 +125,12 @@ function App() {
                   return work.isDone === false
                 }).map((item) => {
                   return <Cards 
-                  // key={item.id}
+                  key={item.id}
                   item={item}
                   fnc1={clickDeleteButtonHandler}
                   fnc2={clickCompleteButtonHandler}
+                  fnc3={updateButtonHandler}
+                  fnc4={completeUpdateButton}
                   c={'완료'}
                   ></Cards>
                 })
@@ -117,10 +145,12 @@ function App() {
                   return work.isDone === true
                 }).map((item) => {
                   return <Cards 
-                  // key={item.id}
+                  key={item.id}
                   item={item}
                   fnc1={clickDeleteButtonHandler}
                   fnc2={clickCancelButtonHandler}
+                  fnc3={updateButtonHandler}
+                  fnc4={completeUpdateButton}
                   c={'취소'}
                   ></Cards>
                 })
