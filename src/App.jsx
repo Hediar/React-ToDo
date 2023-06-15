@@ -28,7 +28,6 @@ function App() {
     setContent(event.target.value);
   };
 
-
   const clickAddButtonHandler = (event) =>{
     event.preventDefault();
     const newWorking = {
@@ -100,7 +99,6 @@ function App() {
     currentButtons.querySelector('.update').classList.remove(HIDDEN_CLASSNAME);
     newContent.classList.add(HIDDEN_CLASSNAME);
     currentButtons.querySelector('.update-complete').classList.add(HIDDEN_CLASSNAME);
-    
   };
 
   return (
