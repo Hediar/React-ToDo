@@ -9,30 +9,12 @@ function App() {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [isDone, setisDone] = useState(false);
 
-  const [working, setworking] = useState([
-    // {
-    //   id: 1,
-    //   work: '리액트 공부하기',
-    //   content: '리액트 기초를 공부해봅시다.',
-    //   isDone,
-    // },
-  ]);
-  // const [working, setworking] = useState(() => {
-  //   if(typeof window != "undefined"){
-  //     const saved = window.localStorage.getItem('todokey');
-  //     if (saved !== null) {
-  //       return JSON.parse(saved);
-  //     } else{
-  //       return [];
-  //     }
-  //   }
-  // });
+
+  const [working, setworking] = useState([]);
 
   useEffect(() => {
     const data = localStorage.getItem("todokey");
-    console.log(working);
     if(data) {
       setworking(JSON.parse(data));
     }
@@ -67,6 +49,7 @@ function App() {
   const clickDeleteButtonHandler = (id) => {
     const updateWokrings = working.filter((work) => work.id !== id);
     setworking(updateWokrings);
+    localStorage.setItem('todokey', JSON.stringify([...updateWokrings]));
   };
 
   const clickCompleteButtonHandler = (id) => {
