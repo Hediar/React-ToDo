@@ -99,6 +99,7 @@ function App() {
     currentButtons.querySelector('.update').classList.remove(HIDDEN_CLASSNAME);
     newContent.classList.add(HIDDEN_CLASSNAME);
     currentButtons.querySelector('.update-complete').classList.add(HIDDEN_CLASSNAME);
+    
   };
 
   return (
