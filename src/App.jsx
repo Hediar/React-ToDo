@@ -1,24 +1,25 @@
 
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// import AddButton from './components/Buttons';
+import Cards from './components/Cards';
+import Input from './components/Input';
 
 function App() {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const [isDone, setisDone] = useState(false);
 
-  const [working, setworking] = useState([
-    {
-      id: 1,
-      work: '리액트 공부하기',
-      content: '리액트 기초를 공부해봅시다.',
-      isDone,
-    },
-  ]);
+  const [working, setworking] = useState([]);
+
+  useEffect(() => {
+    const data = localStorage.getItem("todokey");
+    if(data) {
+      setworking(JSON.parse(data));
+    }
+  }, []);
+
 
   const titleAddHandler = (event) => {
     setTitle(event.target.value);
@@ -28,22 +29,27 @@ function App() {
     setContent(event.target.value);
   };
 
+
+
   const clickAddButtonHandler = (event) =>{
     event.preventDefault();
     const newWorking = {
       id: working.length +1,
       work: title,
       content: content,
-      isDone,
+      isDone: false,
     }
-    setworking([...working, newWorking]);
+    const updateWorking = [...working, newWorking];
+    setworking(updateWorking);
+    localStorage.setItem('todokey', JSON.stringify(updateWorking));
     setTitle('');
     setContent('');
   };
 
   const clickDeleteButtonHandler = (id) => {
-    const newWorkings = working.filter((work) => work.id !== id);
-    setworking(newWorkings);
+    const updateWokrings = working.filter((work) => work.id !== id);
+    setworking(updateWokrings);
+    localStorage.setItem('todokey', JSON.stringify([...updateWokrings]));
   };
 
   const clickCompleteButtonHandler = (id) => {
@@ -54,6 +60,8 @@ function App() {
       return work;
     });
     setworking(updateWokrings);
+
+    localStorage.setItem('todokey', JSON.stringify([...updateWokrings]));
   };
 
   const clickCancelButtonHandler = (id) => {
@@ -65,7 +73,9 @@ function App() {
     });
 
     setworking(updateWokrings);
+    localStorage.setItem('todokey', JSON.stringify([...updateWokrings]));
   };
+
 
   return (
     <div className='mytodo'>
@@ -88,16 +98,13 @@ function App() {
                 working.filter((work) => {
                   return work.isDone === false
                 }).map((item) => {
-                  return (
-                    <div key={item.id} className='todo-box'>
-                      <h2 className='work-title'>{item.work}</h2>
-                      {item.content}
-                      <div className='buttons'>
-                        <Button role={'delete'} name={'삭제하기'} fnc={clickDeleteButtonHandler} para={item}></Button>
-                        <Button role={'complete'} name={'완료'} fnc={clickCompleteButtonHandler} para={item}></Button>
-                      </div>
-                    </div>
-                  )
+                  return <Cards 
+                  // key={item.id}
+                  item={item}
+                  fnc1={clickDeleteButtonHandler}
+                  fnc2={clickCompleteButtonHandler}
+                  c={'완료'}
+                  ></Cards>
                 })
               }
             </div>
@@ -109,16 +116,13 @@ function App() {
                 working.filter((work) => {
                   return work.isDone === true
                 }).map((item) => {
-                  return (
-                    <div key={item.id} className='todo-box'>
-                      <h2 className='work-title'>{item.work}</h2>
-                      {item.content}
-                      <div className='buttons'>
-                        <button className='delete' onClick={() => clickDeleteButtonHandler(item.id)}>삭제하기</button>
-                        <button className='complete' onClick={() => clickCancelButtonHandler(item.id)}>취소</button>
-                      </div>
-                    </div>
-                  )
+                  return <Cards 
+                  // key={item.id}
+                  item={item}
+                  fnc1={clickDeleteButtonHandler}
+                  fnc2={clickCancelButtonHandler}
+                  c={'취소'}
+                  ></Cards>
                 })
               }
             </div>
@@ -128,22 +132,5 @@ function App() {
   );
 }
 
-const Input = ({labelName, value, Add}) => {
-  return (
-    <>
-    <label>{labelName}</label>
-          <input 
-          type='text'
-          value={value}
-          onChange={(event) => Add(event)}
-          className='add-input'
-          ></input>
-    </>
-  )
-};
-
-const Button = ({role, name, fnc, para}) =>{
-  return <button className={role} onClick={() => fnc(para.id)}>{name}</button>
-};
 
 export default App;
