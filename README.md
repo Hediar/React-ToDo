@@ -1,5 +1,5 @@
 ### Components
-
+https://velog.velcdn.com/images/hediar/post/a9501361-447f-4a2a-9f6d-9fed57ccbb31/image.png
 #### App.jsx
 
 Cards, Input 컴포넌트를 하위로 가지고 있습니다.
