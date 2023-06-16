@@ -100,6 +100,23 @@ function App() {
     newContent.classList.add(HIDDEN_CLASSNAME);
     currentButtons.querySelector('.update-complete').classList.add(HIDDEN_CLASSNAME);
     
+    const newTitleValue = newContent.querySelector('.update-title').value;
+    const newContentValue = newContent.querySelector('.update-content').value;
+
+    
+    const newSetting = (id) =>{
+      const newWorking = working.map((data) => {
+          if(data.id === id) {
+              return {...data, work: newTitleValue, content: newContentValue}
+          }
+          return data;
+      });
+
+      localStorage.setItem('todokey', JSON.stringify([...newWorking]));
+      setworking(newWorking);
+    };
+
+    newSetting(id);
   };
 
   return (
@@ -130,8 +147,7 @@ function App() {
                   fnc2={clickCompleteButtonHandler}
                   fnc3={updateButtonHandler}
                   fnc4={completeUpdateButton}
-                  c={'완료'}
-                  ></Cards>
+                  >완료</Cards>
                 })
               }
             </div>
@@ -150,8 +166,7 @@ function App() {
                   fnc2={clickCancelButtonHandler}
                   fnc3={updateButtonHandler}
                   fnc4={completeUpdateButton}
-                  c={'취소'}
-                  ></Cards>
+                  >취소</Cards>
                 })
               }
             </div>
