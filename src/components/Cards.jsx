@@ -1,19 +1,7 @@
 import Button from './Button';
-import { useEffect, useState } from 'react';
-// import UpdateContent from './UpdateContent';
+import UpdateContent from './UpdateContent';
 
 const Cards = (props) => {
-  const [newTitle, setnewTitle] = useState(props.item.work);
-  const [newContent, setnewContent] = useState(props.item.content);
-
-  const newTitleHandler = (event) => {
-      setnewTitle(event.target.value);
-  };
-    
-  const newContentHandler = (event) => {
-    setnewContent(event.target.value);
-  };
-
     return (
       <div key={props.item.id} className='todo-box'>
         <div className='todo-text'>
@@ -21,15 +9,7 @@ const Cards = (props) => {
           {props.item.content}
         </div>
         <div className='update-box hidden'>
-          <input className='update-title'
-            type='text'
-            value={newTitle}
-            onChange={(event) => newTitleHandler(event)}
-            ></input>
-            <textarea className='update-content'
-            value={newContent}
-            onChange={(event) => newContentHandler(event)}
-            ></textarea>
+            <UpdateContent item={props.item}></UpdateContent>
         </div>
         <div className='buttons'>
           <Button role={'delete'} name={'삭제하기'} fnc={props.fnc1} para={props.item}></Button>
