@@ -1,5 +1,5 @@
 ### Components
-
+![화면 캡처 2023-06-16 124139](https://github.com/Hediar/React-ToDo/assets/72387948/95f2fa0e-8d5d-496a-ac2e-4ac68e710956)
 #### App.jsx
 
 Cards, Input 컴포넌트를 하위로 가지고 있습니다.
@@ -14,7 +14,7 @@ UpdateContent 태그가 하위로 포함되어 있습니다.
 
 #### UpdateContent.jsx
 
-1.0 이후 수정기능 추가할 때 만들어진 컴포넌트입니다.
+2.0 수정기능 추가할 때 만들어진 컴포넌트입니다.
 수정 버튼을 누르면 기존에 담겨져 있던 제목과 내용을 입력받는 컴포넌트 입니다.
 
 #### input.jsx
