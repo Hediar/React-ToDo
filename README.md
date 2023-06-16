@@ -1,5 +1,5 @@
 ### Components
-
+![화면 캡처 2023-06-16 124139](https://github.com/Hediar/React-ToDo/assets/72387948/95f2fa0e-8d5d-496a-ac2e-4ac68e710956)
 #### App.jsx
 
 Cards, Input 컴포넌트를 하위로 가지고 있습니다.
